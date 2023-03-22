@@ -1,0 +1,170 @@
+#include<iostream>
+#include<stdlib.h>
+#include<iomanip>
+using namespace std;
+enum choice1 {
+	first = 1,
+	second
+};
+int** get_memory1(int size);
+void vvod(int*, int);
+void show(int*, int);
+void input(int** matrix, int size);
+void output(int** matrix,int size);
+void free_memory(int** matrix, int size);
+int f(int i, int j, int n);
+
+int main()
+{
+	cout << " choose solution:" << endl;
+	int choice;
+	cin >> choice;
+	if (choice > 2)
+	{
+		cout << " error";
+		return 0;
+	}
+	switch (choice) {
+	case first: {
+		int* matrix;
+		int size;
+		cout << "Enter n:";
+		cin >> size;
+		matrix = new int[size * size];
+		vvod(matrix, size);
+		show(matrix, size);
+		vector(matrix, size);
+		delete[] matrix;
+		break;
+	}
+	case second: {
+		
+			int size;
+			cout << "Enter n:";
+			cin >> size;
+			int* vect = new int[2 * size - 1];
+			int** matrix = get_memory1(size);
+			input(matrix, size);
+			output(matrix, size);
+			free_memory(matrix, size);
+		break;
+		
+	}
+	}
+	
+}
+
+int f(int i, int j, int n)
+{
+	return (i * n + j);
+}
+
+
+void vvod(int* array, int n)
+{
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			array[f(i, j, n)] = rand() % 10;
+}
+
+void show(int* arr, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+			cout << setw(5) << arr[f(i, j, n)];
+		cout << endl;
+	}
+}
+void vector(int* arr, int n)
+{
+	int k = 0;
+	int* vect0r = new int[2 * n - 1];
+	int min_element = 0;
+	for (int count = -n; count <= n - 1; count++)
+	{
+		if (count <= -1)
+		{
+			min_element = arr[f(0, count + n, n)];
+		}
+		else
+		{
+			min_element = arr[f(count + 1, n - 1, n)];
+		}
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+
+				if (i == n - j + count)
+				{
+					if (arr[f(i, j, n)] < min_element)
+					{
+						min_element = arr[f(i, j, n)];
+					}
+				}
+			}
+
+		}
+		vect0r[k] = min_element;
+		k++;
+	}
+	for (int i = 0; i < 2 * n - 1; i++)
+	{
+		cout << vect0r[i] << "\t";
+	}
+	
+}
+int** get_memory1(int size)
+{
+	int** matrix = new int* [size];
+	for (int i = 0; i < size; i++)
+		matrix[i] = new int[size];
+	return matrix;
+}
+
+
+
+
+
+
+void free_memory(int** matrix, int size)
+{
+	for (int i = 0; i < size; i++)
+		delete[] matrix[i];
+	delete[] matrix;
+}
+void output(int** matrix, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+			cout << setw(5) << matrix[i][j];
+		cout << endl;
+	}
+}
+void input(int** matrix, int size, int* vect)
+{
+	int min;
+	int i = 1, j, k;
+	for (k = 0; k < (2 * size - 1); k++)
+	{
+		min = -1;
+		j = abs((size - 1) - k);
+		for (i = 0; i <= ((size - 1) - abs((size - 1) - k)); i++)
+		{
+			if (k < size)
+				if (matrix[i][j] < min)
+					min = matrix[i][j];
+			if (k >= size)
+				if (matrix[j][i] <  min)
+					min = matrix[j][i];
+			j++;
+		}
+		vect[k] = min;
+	}
+	cout << "result:"<< endl;
+	for (i = 0; i < (2 * size - 1); i++)
+		cout << vect[i];
+
+}
