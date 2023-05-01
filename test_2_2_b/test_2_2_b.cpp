@@ -1,8 +1,7 @@
 ﻿#include"Header.h"
 
 int main()
-{
-    
+{   
     List<int> filling1;
     List<int> filling2;
     List<int> finalList;
@@ -17,8 +16,4 @@ int main()
     check_and_fill(filling1, filling2, finalList, size);
     cout << endl <<"Final list:" << endl;
     printList(finalList, size);
-   
-    
-
 }
-
