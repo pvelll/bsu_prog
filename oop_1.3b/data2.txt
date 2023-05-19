@@ -1,0 +1,4 @@
+Name: Alex, Date of birth: 2000, Course: 2, Marks: 3.5
+Name: Grace, Date of birth: 2000, Course: 2, Marks: 3.4
+Name: grisha, Date of birth: 01.01.2001, Course: 2, Marks: 5.4
+Name: vitalik, Date of birth: 04,04,1999, Course: 2, Marks: 8.6
