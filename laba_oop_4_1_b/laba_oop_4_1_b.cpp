@@ -14,6 +14,7 @@ int main()
 {
 	
 	int choice2;
+	std::cout << "Choose solution: " << std::endl << "1 - laba 4.1" << std::endl << "2 - laba 4.2" << std::endl;  
 	switch (choice2) {
 	case 1: {
 		int choice;
