@@ -1,40 +1,101 @@
-#pragma once
+﻿#pragma once
 #include "Base.h"
 class DynamicArray {
 public:
-    DynamicArray() = default;
-    DynamicArray(const DynamicArray& other) : objects(other.objects) {}
-    DynamicArray(DynamicArray&& other) noexcept : objects(std::move(other.objects)) {}
+    // Конструктор по умолчанию
+    DynamicArray() : size_(0), capacity_(0), data_(nullptr) {}
+
+    // Конструктор копирования
+    DynamicArray(const DynamicArray& other) : size_(other.size_), capacity_(other.capacity_), data_(new Base* [capacity_]) {
+        for (int i = 0; i < size_; ++i) {
+            data_[i] = other.data_[i];
+        }
+    }
+
+    // Конструктор перемещения
+    DynamicArray(DynamicArray&& other) noexcept : size_(other.size_), capacity_(other.capacity_), data_(other.data_) {
+        other.size_ = 0;
+        other.capacity_ = 0;
+        other.data_ = nullptr;
+    }
+
+    // Деструктор
+    ~DynamicArray() {
+        for (int i = 0; i < size_; ++i) {
+            delete data_[i];
+        }
+        delete[] data_;
+    }
+
+    // Оператор присваивания копированием
     DynamicArray& operator=(const DynamicArray& other) {
         if (this != &other) {
-            objects = other.objects;
+            for (int i = 0; i < size_; ++i) {
+                delete data_[i];
+            }
+            delete[] data_;
+            size_ = other.size_;
+            capacity_ = other.capacity_;
+            data_ = new Base * [capacity_];
+            for (int i = 0; i < size_; ++i) {
+                data_[i] = other.data_[i];
+            }
         }
         return *this;
     }
+
+    // Оператор присваивания перемещением
     DynamicArray& operator=(DynamicArray&& other) noexcept {
         if (this != &other) {
-            objects = std::move(other.objects);
+            for (int i = 0; i < size_; ++i) {
+                delete data_[i];
+            }
+            delete[] data_;
+            size_ = other.size_;
+            capacity_ = other.capacity_;
+            data_ = other.data_;
+            other.size_ = 0;
+            other.capacity_ = 0;
+            other.data_ = nullptr;
         }
         return *this;
     }
-    ~DynamicArray() = default;
 
-    void addObject(Base* obj) {
-        objects.push_back(obj);
+    // Метод для добавления объекта в массив
+    void addObject(Base* value) {
+        if (size_ == capacity_) {
+            int newCapacity = (capacity_ == 0) ? 1 : capacity_ * 2;
+            Base** newData = new Base * [newCapacity];
+            std::copy(data_, data_ + size_, newData);
+            delete[] data_;
+            data_ = newData;
+            capacity_ = newCapacity;
+        }
+        data_[size_] = value;
+        ++size_;
     }
 
-    void output() {
-        for (size_t i = 0; i < objects.size(); i++)
-        {
-            std::cout << objects[i] << " ";
+    // Метод для удаления объекта из массива
+    void removeObject(int index) {
+        if (index >= 0 && index < size_) {
+            delete data_[index];
+            for (int i = index; i < size_ - 1; ++i) {
+                data_[i] = data_[i + 1];
+            }
+            --size_;
         }
     }
 
-    void removeObject(Base* obj) {
-        objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
+    // Метод для вывода элементов массива
+    void print() const {
+        for (int i = 0; i < size_; ++i) {
+            data_[i]->Print();
+        }
+        std::cout << '\n';
     }
 
 private:
-    std::vector<Base*> objects;
+    int size_;
+    int capacity_;
+    Base** data_;
 };
-

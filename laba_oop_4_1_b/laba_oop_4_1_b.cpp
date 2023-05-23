@@ -12,42 +12,64 @@
 
 int main()
 {
-	int choice;
-	std::cout << "Input 1 to try Ellipse " << std::endl << "Input 2 to try HypetLinkLabel " << std::endl << "Input 3 to try TextBox " << std::endl << "Input 4 to try Button" << std::endl;
-	std::cin >> choice;
-	DynamicArray da;
-	switch (choice) {
+	
+	int choice2;
+	switch (choice2) {
 	case 1: {
-		Ellipse el;
-		std::cout << el;
-		/*da.addObject(new Ellipse);*/
-		break;
-	}
-	case 2: {
-		HyperlinkLabel hl;
-		std::cout << hl;
-		/*da.addObject(new Base_Text);*/
-		break;
-	}
-	case 3: {
-		TextBox tb;
-		std::cout << tb;
-		/*da.addObject(new Base_Text);*/
-		break;
-	}
-	case 4: {
-		Button b;
-		std::cout << b;
-		/*da.addObject(new Button);
-		da.output();*/
+		int choice;
+		std::cout << "Input 1 to try Ellipse " << std::endl << "Input 2 to try HypetLinkLabel " << std::endl << "Input 3 to try TextBox " << std::endl << "Input 4 to try Button" << std::endl;
+		std::cin >> choice;
+		DynamicArray da;
+		switch (choice) {
+		case 1: {
+			Ellipse el;
+			std::cout << el;
+			/*da.addObject(new Ellipse);
+			da.print();*/
+			break;
+		}
+		case 2: {
+			HyperlinkLabel hl;
+			std::cout << hl;
+			/*da.addObject(new Base_Text);*/
+			break;
+		}
+		case 3: {
+			TextBox tb;
+			std::cout << tb;
+			/*da.addObject(new Base_Text);*/
+			break;
+		}
+		case 4: {
+			Button b;
+			std::cout << b;
+			/*da.addObject(new Button);
+			da.output();*/
 
-		break;
+			break;
+		}
+		default: {
+			std::cout << "error 404, try again" << std::endl;
+			return 0;
+		}
+		}
 	}
-	default: {
-		std::cout << "error 404, try again" << std::endl;
-		return 0;
+	case 2:
+	{
+		DynamicArray da;
+		std::cout << "Dinamic array automatically added all abjects " << std::endl;
+		Ellipse el;
+		HyperlinkLabel hll;
+		TextBox tb;
+		Button b;
+		da.addObject(new Ellipse);
+		da.addObject(new HyperlinkLabel);
+		da.addObject(new TextBox);
+		da.addObject(new Button);
+		da.print();
 	}
 	}
+	
 
 }
 

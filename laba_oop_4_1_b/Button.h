@@ -13,7 +13,6 @@ public:
 	Button virtual operator=(Button&& other) noexcept;
 private:
 	char text[100];
-
 public: 
 	void Print()override;
 	void  setText(char *t);

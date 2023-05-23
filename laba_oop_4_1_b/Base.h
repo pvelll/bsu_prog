@@ -9,7 +9,7 @@
 
 class Base
 {
-protected:
+public:
 	bool visibility = IsVisible();
 	int height;
 	int width;
