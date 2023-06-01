@@ -53,8 +53,8 @@ Ellipse Ellipse::operator=(Ellipse&& other) noexcept
 		fcolor = other.fcolor;
 		bcolor = other.bcolor;
 	}
-	delete[] this;
-	return other;
+	delete &other;
+	return *this;
 }
 
 void Ellipse::print()
