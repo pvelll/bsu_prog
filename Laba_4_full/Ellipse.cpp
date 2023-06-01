@@ -132,18 +132,18 @@ void Ellipse::setBorderColor()
 	switch (choice) {
 	case 1: {
 		const char* color = "red";
-		fcolor = color;
+		bcolor = color;
 		break;
 	}
 	case 2: {
 		const char* color = "green";
 
-		fcolor = color;
+		bcolor = color;
 		break;
 	}
 	case 3: {
 		const char* color = "blue";
-		fcolor = color;
+		bcolor = color;
 		break;
 	}
 	default: {
