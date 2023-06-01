@@ -2,19 +2,20 @@
 #include "Base.h"
 class DynamicArray {
 private:
-    Base** elements;
+    Base** objects;
     int size;
-    int realSize = 0;
+    int capacity = 0;
 public:
-    DynamicArray() : elements(nullptr), size(0) {}
-    DynamicArray(int size) : elements(new Base* [size]), size(size) {}
+    DynamicArray() : objects(nullptr), size(0) {}
+    DynamicArray(int size) : objects(new Base* [size]), size(size) {}
     DynamicArray(const DynamicArray& other);
     ~DynamicArray();  
 
     DynamicArray& operator=(const DynamicArray& other);
     Base& operator[](int index);
 
-    int getsize();
+    int getSize();
     void addObject(Base* element);
-    void remove(int ind);
+    void remove(int index);
+ 
 };
