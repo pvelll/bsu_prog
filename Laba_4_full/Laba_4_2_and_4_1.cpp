@@ -8,10 +8,6 @@
 #include "List.h"
 
 
-// что сделано, 1 изменены названия, 2 для каждого поля есть свой get и set, 3 полностью переделал конструкторы
-// 4 у всех классов одиноковый порядок (1 поля, 2 конструкторы и деструктор, 3 операторы,4 методы,5 дружественные функции)
-// 5 убрал инициализацию внутри класса, 6 мелкие изменения в методах
-
 int main()
 {
 	std::cout << "Choose solution: " << std::endl << "1 - laba 4.1" << std::endl << "2 - laba 4.2" << std::endl <<  "3 - Laba 4.4" << std::endl;
@@ -69,14 +65,16 @@ int main()
 	{
 		DynamicArray da;
 		std::cout << "Dinamic array automatically added all abjects " << std::endl;
-		Ellipse el;
-		HyperlinkLabel hll;
-		TextBox tb;
-		Button b;
-		da.addObject(new Ellipse);
 		da.addObject(new TextBox);
-		da.addObject(new Button);
-		da.printObj();
+		da.addObject(new Ellipse);
+		for (int i = 0; i < da.getsize(); i++)
+		{
+			std::cin >> da[i];
+		}
+		for (int i = 0; i < da.getsize(); i++)
+		{
+			std::cout << da[i];
+		}
 		break;
 	}
 	case 3: {
