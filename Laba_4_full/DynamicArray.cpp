@@ -29,9 +29,6 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
 }
 
 Base& DynamicArray::operator[](int index) {
-    if (index >= capacity) {
-        throw "fuck";
-    }
     return *objects[index];
 }
 
