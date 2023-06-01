@@ -1,67 +1,68 @@
 #include "DynamicArray.h"
 
 
-DynamicArray::DynamicArray(const DynamicArray& other) : elements(new Base* [other.size]), size(other.size) {
+DynamicArray::DynamicArray(const DynamicArray& other) : objects(new Base* [other.size]), size(other.size) {
     for (int i = 0; i < size; i++) {
-        elements[i] = other.elements[i];
+        objects[i] = other.objects[i];
     }
-    realSize = other.realSize;
+    capacity = other.capacity;
 }
 
 DynamicArray::~DynamicArray() {
-    for (int i = 0; i < realSize; i++) {
-        delete elements[i];
+    for (int i = 0; i < capacity; i++) {
+        delete objects[i];
     }
-    delete[] elements;
+    delete[] objects;
 }
 
 DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
     if (this != &other) {
-        delete[] elements;
-        elements = new Base * [other.size];
+        delete[] objects;
+        objects = new Base * [other.size];
         size = other.size;
         for (int i = 0; i < size; i++) {
-            elements[i] = other.elements[i];
+            objects[i] = other.objects[i];
         }
-        realSize = other.realSize;
+        capacity = other.capacity;
     }
     return *this;
 }
 
 Base& DynamicArray::operator[](int index) {
-    if (index >= realSize) {
+    if (index >= capacity) {
         throw "fuck";
     }
-    return *elements[index];
+    return *objects[index];
 }
 
-int DynamicArray::getsize() {
-    return realSize;
+int DynamicArray::getSize() {
+    return capacity;
 }
 
 
 void DynamicArray::addObject(Base* element) {
-    if (realSize == size) {
+    if (capacity == size) {
         Base** newElements = new Base * [size + 1];
-        for (int i = 0; i < realSize; i++) {
-            newElements[i] = elements[i];
+        for (int i = 0; i < capacity; i++) {
+            newElements[i] = objects[i];
         }
-        newElements[realSize] = element;
-        delete[] elements;
-        elements = newElements;
+        newElements[capacity] = element;
+        delete[] objects;
+        objects = newElements;
         size++;
-        realSize++;
+        capacity++;
         return;
     }
-    elements[realSize] = element;
-    realSize++;
+    objects[capacity] = element;
+    capacity++;
 }
 
-void DynamicArray::remove(int ind) {
-    delete elements[ind];
+void DynamicArray::remove(int index) {
+    delete objects[index];
     size--;
-    realSize--;
-    for (int i = ind; i < realSize; i++) {
-        elements[i] = elements[i + 1];
+    capacity--;
+    for (int i = index; i < capacity; i++) {
+        objects[i] = objects[i + 1];
     }
 }
+
