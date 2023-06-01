@@ -80,10 +80,11 @@ int main()
 	case 3: {
 		List<Base> list;
 		std::unique_ptr<Ellipse> el = std::make_unique<Ellipse>();
-		list.pushFront(std::move(el));
+		list.addObject(std::move(el));
 		std::unique_ptr<TextBox> tb = std::make_unique<TextBox>();
-		list.pushFront(std::move(tb));
-		list.display();
+		list.addObject(std::move(tb));
+		list.input();
+		list.print();
 		break;
 
 	}
