@@ -1,27 +1,20 @@
 #pragma once
 #include "Base.h"
 class DynamicArray {
+private:
+    Base** elements;
     int size;
-    int capacity;
-    Base** objects;
+    int realSize = 0;
 public:
-    DynamicArray() : size(0), capacity(0), objects(nullptr) {}
-    DynamicArray(const DynamicArray& other) : size(other.size), capacity(other.capacity), objects(new Base* [capacity]) {
-        for (int i = 0; i < size; ++i) {
-            objects[i] = other.objects[i];
-        }
-    }
-    DynamicArray(DynamicArray&& other) noexcept : size(other.size), capacity(other.capacity), objects(other.objects) {
-        other.size = 0;
-        other.capacity = 0;
-        other.objects = nullptr;
-    }
-    ~DynamicArray();
+    DynamicArray() : elements(nullptr), size(0) {}
+    DynamicArray(int size) : elements(new Base* [size]), size(size) {}
+    DynamicArray(const DynamicArray& other);
+    ~DynamicArray();  
 
     DynamicArray& operator=(const DynamicArray& other);
-    DynamicArray& operator=(DynamicArray&& other) noexcept;
+    Base& operator[](int index);
 
-    void addObject(Base* value);
-    void removeObject(int index);
-    void printObj() const; 
+    int getsize();
+    void addObject(Base* element);
+    void remove(int ind);
 };
