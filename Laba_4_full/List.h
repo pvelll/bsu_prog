@@ -8,54 +8,99 @@
 
 template <typename T>
 class List {
-private:
     struct Node {
         std::unique_ptr<T> data;
-        std::unique_ptr<Node> next;
-        Node(std::unique_ptr<T> data) : data(std::move(data)), next(nullptr) {}
+        Node* next;
+        Node(std::unique_ptr<T> data, Node* next = nullptr) : data(std::move(data)), next(next) {}
     };
-    std::unique_ptr<Node> head;
-
+    Node* head;
 public:
     List() : head(nullptr) {}
-
-    // Rule of Five
-    ~List() = default;
-    List(const List& other) = delete;
-    List& operator=(const List& other) = delete;
-    List(List&& other) noexcept = default;
-    List& operator=(List&& other) noexcept = default;
-
-    void pushFront(std::unique_ptr<T> data) {
-        auto new_node = std::make_unique<Node>(std::move(data));
-        new_node->next = std::move(head);
-        head = std::move(new_node);
-    }
-
-    void popFront() {
-        if (head != nullptr) {
-            head = std::move(head->next);
+    List(const List& other) : head(nullptr) {
+        Node** current = &head;
+        for (Node* temp = other.head; temp != nullptr; temp = temp->next) {
+            *current = new Node(std::make_unique<T>(*temp->data));
+            current = &(*current)->next;
         }
     }
-
-    void display() const {
-        for (auto current = head.get(); current != nullptr; current = current->next.get()) {
-            std::cout << *(current->data) << ' ';
-        }
-        std::cout << '\n';
+    List(List&& other) noexcept : head(other.head) {
+        other.head = nullptr;
     }
-
-    void clear() {
+    ~List() {
         while (head != nullptr) {
-            popFront();
+            Node* temp = head;
+            head = head->next;
+            delete temp;
         }
     }
 
-    List copy() const {
-        List new_list;
-        for (auto current = head.get(); current != nullptr; current = current->next.get()) {
-            new_list.pushFront(std::make_unique<T>(*(current->data)));
+    List& operator=(const List& other) {
+        if (this != &other) {
+            while (head != nullptr) {
+                Node* temp = head;
+                head = head->next;
+                delete temp;
+            }
+            Node** current = &head;
+            for (Node* temp = other.head; temp != nullptr; temp = temp->next) {
+                *current = new Node(std::make_unique<T>(*temp->data));
+                current = &(*current)->next;
+            }
         }
-        return new_list;
+        return *this;
+    }
+
+    List& operator=(List&& other) noexcept {
+        if (this != &other) {
+            while (head != nullptr) {
+                Node* temp = head;
+                head = head->next;
+                delete temp;
+            }
+            head = other.head;
+            other.head = nullptr;
+        }
+        return *this;
+    }
+
+    void addObject(std::unique_ptr<T> value) {
+        if (head == nullptr) {
+            head = new Node(std::move(value));
+        }
+        else {
+            Node* current = head;
+            while (current->next != nullptr)
+                current = current->next;
+            current->next = new Node(std::move(value));
+        }
+    }
+
+    void removeObject(int index) {
+        if (index == 0 && head != nullptr) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+        else if (index > 0 && head != nullptr) {
+            Node* current = head;
+            for (int i = 0; i < index - 1 && current->next != nullptr; ++i)
+                current = current->next;
+
+            if (current->next != nullptr) {
+                Node* temp = current->next;
+                current->next = current->next->next;
+                delete temp;
+            }
+        }
+    }
+
+    void input() {
+        for (Node* current = head; current != nullptr; current = current->next)
+            current->data->input();
+    }
+
+    void print() const {
+        for (Node* current = head; current != nullptr; current = current->next)
+            current->data->print();
     }
 };
