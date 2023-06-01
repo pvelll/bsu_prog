@@ -42,13 +42,13 @@ int DynamicArray::getSize() {
 
 void DynamicArray::addObject(Base* element) {
     if (capacity == size) {
-        Base** newElements = new Base * [size + 1];
+        Base** tmp = new Base * [size + 1];
         for (int i = 0; i < capacity; i++) {
-            newElements[i] = objects[i];
+            tmp[i] = objects[i];
         }
-        newElements[capacity] = element;
+        tmp[capacity] = element;
         delete[] objects;
-        objects = newElements;
+        objects = tmp;
         size++;
         capacity++;
         return;
